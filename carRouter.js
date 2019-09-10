@@ -16,16 +16,16 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+  const { id } = req.params;
   const carData = req.body;
   console.log(req.body);
 
   db("cars")
-    .insert(req.body)
-
+    .where({ id })
+    .insert(carData)
     .then(car => {
       res.status(200).json(car);
     })
-
     .catch(err => {
       res.status(500).json({ message: "Failed to add car" });
     });
